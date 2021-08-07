@@ -1,8 +1,10 @@
 import json
 from flask_login import UserMixin
-from mongoengine import connect, Document, EmbeddedDocument, StringField, SortedListField, EmbeddedDocumentField, ListField, FloatField
+from mongoengine import connect, Document, EmbeddedDocument, StringField, SortedListField, EmbeddedDocumentField, \
+    ListField, FloatField
 
 connect('RainChecker')
+
 
 # sudo service mongod status
 
@@ -19,9 +21,10 @@ class Option(EmbeddedDocument):
 
 class Item(EmbeddedDocument):
     item_name = StringField()
-    options = SortedListField(EmbeddedDocumentField(Option), ordering = 'price')
+    options = SortedListField(EmbeddedDocumentField(Option), ordering='price')
     # link = StringField()
     # price = StringField()
+
 
 class User(Document):
     # username = StringField()
@@ -30,33 +33,32 @@ class User(Document):
     # watchList = SortedListField(EmbeddedDocumentField(Item), ordering = 'item_name')
     watchList = ListField(EmbeddedDocumentField(Item))
 
+
 class LoginUser(Document, UserMixin):
     email = StringField()
 
 
-
-
 def addUser(email, password):
-    if User.objects(email = email).first():
+    if User.objects(email=email).first():
         return 'email already used'
 
-    User(email = email, password = password).save()
-    LoginUser(email = email).save()
+    User(email=email, password=password).save()
+    LoginUser(email=email).save()
     return 'new user created'
 
 
 def removeUser(email):
-    if not User.objects(email = email).first():
+    if not User.objects(email=email).first():
         return 'user not exist'
 
-    User.objects(email = email).first().delete()
-    LoginUser.objects(email = email).first().delete()
+    User.objects(email=email).first().delete()
+    LoginUser.objects(email=email).first().delete()
 
 
 # [[option name,  price, vendor name, link, image link], [option name,  price, vendor name, link, image link]]
 
 def addItem(email, item_name, allOptions):
-    user = User.objects(email = email).first()
+    user = User.objects(email=email).first()
     if not user:
         return 'user not exist'
 
@@ -67,16 +69,16 @@ def addItem(email, item_name, allOptions):
             for i in range(len(item.options)):
                 item.options.pop(0)
             for opt in allOptions:
-                temp = Option(optionName = opt[0], price = opt[1], supplier = opt[2], link = opt[3], imageLink = opt[4])
+                temp = Option(optionName=opt[0], price=opt[1], supplier=opt[2], link=opt[3], imageLink=opt[4])
                 item.options.append(temp)
-            
+
             user.save()
             return 'item options renewed'
 
-    item = Item(item_name = item_name)
-    
+    item = Item(item_name=item_name)
+
     for opt in allOptions:
-        temp = Option(optionName = opt[0], price = opt[1], supplier = opt[2], link = opt[3], imageLink = opt[4])
+        temp = Option(optionName=opt[0], price=opt[1], supplier=opt[2], link=opt[3], imageLink=opt[4])
         item.options.append(temp)
 
     watchList.append(item)
@@ -85,7 +87,7 @@ def addItem(email, item_name, allOptions):
 
 
 def removeItem(email, item_name):
-    user = User.objects(email = email).first()
+    user = User.objects(email=email).first()
     if not user:
         return 'user does not exist'
 
@@ -98,10 +100,11 @@ def removeItem(email, item_name):
 
     return 'item not found in watch list'
 
+
 # [[option name,  price, vendor name, link, image link], [option name,  price, vendor name, link, image link]]
 
 def getWatchList(email):
-    user = User.objects(email = email).first()
+    user = User.objects(email=email).first()
     if not user:
         return 'user not found'
 
@@ -121,7 +124,7 @@ def getWatchList(email):
             temp_item['options'].append(temp_option)
 
         temp_watchlist.append(temp_item)
-    
+
     return temp_watchlist
 
 
@@ -141,6 +144,7 @@ def updateWatchList():
         allUser.append(temp_user)
     return allUser
 
+
 # [[option name,  price, vendor name, link, image link], [option name,  price, vendor name, link, image link]]
 
 
@@ -152,7 +156,8 @@ if __name__ == '__main__':
     print('\n\n\n')
     print(addUser('wzheng2013@gmail.com', '123456'))
     print(addItem('wzheng2013@gmail.com', 'apple', [['apple 1', 100, 'sup 1', 'apple.com', 'image.link']]))
-    print(addItem('wzheng2013@gmail.com', 'soccer', [['soccer 1', 100, 'sup 1', 'soccer.com', 'image.link'], ['soccer 2', 50, 'sup 2', 'soccer.com', 'image.link']]))
+    print(addItem('wzheng2013@gmail.com', 'soccer', [['soccer 1', 100, 'sup 1', 'soccer.com', 'image.link'],
+                                                     ['soccer 2', 50, 'sup 2', 'soccer.com', 'image.link']]))
     print('\n\n\n')
     print(json.dumps(json.loads(User.objects().to_json()), sort_keys=True, indent=4))
     print('\n\n\n')
@@ -165,7 +170,6 @@ if __name__ == '__main__':
     print(json.dumps(json.loads(User.objects().to_json()), sort_keys=True, indent=4))
     print('\n\n\n')
     print(getWatchList('wzheng2013@gmail.com'))
-
 
     print(addUser('2656485473@qq.com', '123456'))
     print(updateWatchList())
