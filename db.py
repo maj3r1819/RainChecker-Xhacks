@@ -66,9 +66,9 @@ def addItem(email, item_name, allOptions):
             # replace all options for existing items
             for i in range(len(item.options)):
                 item.options.pop(0)
-                for opt in allOptions:
-                    temp = Option(optionName = opt[0], price = opt[1], supplier = opt[2], link = opt[3], imageLink = opt[4])
-                    item.options.append(temp)
+            for opt in allOptions:
+                temp = Option(optionName = opt[0], price = opt[1], supplier = opt[2], link = opt[3], imageLink = opt[4])
+                item.options.append(temp)
             
             user.save()
             return 'item options renewed'
@@ -149,9 +149,15 @@ if __name__ == '__main__':
     print(addUser('wzheng2013@gmail.com', '123456'))
     print(addItem('wzheng2013@gmail.com', 'apple', [['apple 1', 100, 'sup 1', 'apple.com', 'image.link']]))
     print(addItem('wzheng2013@gmail.com', 'soccer', [['soccer 1', 100, 'sup 1', 'soccer.com', 'image.link'], ['soccer 2', 50, 'sup 2', 'soccer.com', 'image.link']]))
+    print('\n\n\n')
+    print(json.dumps(json.loads(User.objects().to_json()), sort_keys=True, indent=4))
+    print('\n\n\n')
     # expect soccer price be 50 then 100
     print(getWatchList('wzheng2013@gmail.com'))
-    print(addItem('wzheng2013@gmail.com', 'soccer', [['soccer 3', 100, 'sup 3', 'soccer.com', 'image.link']]))
+    print(addItem('wzheng2013@gmail.com', 'soccer', [['soccer 3', 300, 'sup 3', 'soccer.com', 'image.link']]))
+    print('\n\n\n')
+    print(json.dumps(json.loads(User.objects().to_json()), sort_keys=True, indent=4))
+    print('\n\n\n')
     print(getWatchList('wzheng2013@gmail.com'))
 
 
