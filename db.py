@@ -1,6 +1,6 @@
 import json
 from flask_login import UserMixin
-from mongoengine import connect, Document, EmbeddedDocument,EmbeddedDocumentListField, StringField, BooleanField, SortedListField, EmbeddedDocumentField, ListField, FloatField
+from mongoengine import connect, Document, EmbeddedDocument, StringField, SortedListField, EmbeddedDocumentField, ListField, FloatField
 
 connect('RainChecker')
 
@@ -132,7 +132,11 @@ def updateWatchList():
         temp_user['email'] = user.email
         temp_watch = []
         for item in user.watchList:
-            temp_watch.append(item.item_name)
+            temp_item = {}
+            temp_item['item_name'] = item.item_name
+            temp_item['option_count'] = len(item.options)
+            temp_watch.append(temp_item)
+            # temp_watch.append(item.item_name)
         temp_user['items'] = temp_watch
         allUser.append(temp_user)
     return allUser
@@ -153,6 +157,8 @@ if __name__ == '__main__':
     print(json.dumps(json.loads(User.objects().to_json()), sort_keys=True, indent=4))
     print('\n\n\n')
     # expect soccer price be 50 then 100
+    print(updateWatchList())
+
     print(getWatchList('wzheng2013@gmail.com'))
     print(addItem('wzheng2013@gmail.com', 'soccer', [['soccer 3', 300, 'sup 3', 'soccer.com', 'image.link']]))
     print('\n\n\n')
