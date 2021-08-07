@@ -37,13 +37,14 @@ def get_products(product):
         all_res = driver.find_elements_by_css_selector("div.sh-dlr__content.xal5Id")
         if len(all_res) == 0:
             print("No results found")
-        for res in all_res[:10]:
+        for res in all_res[1:11]:
             price = res.find_element_by_css_selector("span.a8Pemb")
             product_name = res.find_element_by_css_selector("h3.OzIAJc")
             vendor = res.find_element_by_css_selector("div.b07ME.mqQL1e").find_element_by_tag_name("span")
             link = res.find_element_by_css_selector("a.VZTCjd").get_attribute("href")
+            image = res.find_element_by_css_selector("img.TL92Hc").get_attribute("src")
             products.append(
-                [product_name.text.rstrip(" ..."), float(re.sub(r'[^\d.]+', "", price.text)), vendor.text, link])
+                [product_name.text.rstrip(" ..."), float(re.sub(r'[^\d.]+', "", price.text)), vendor.text, link, image])
         driver.close()
         products.sort(key=lambda x: x[1])
     else:
@@ -55,7 +56,8 @@ def get_products(product):
             product_name = res.find_element_by_css_selector("h4.A2sOrd")
             vendor = res.find_element_by_css_selector("div.aULzUe.IuHnof")
             link = res.find_element_by_css_selector("a.eaGTj.mQaFGe.shntl").get_attribute("href")
-            products.append([product_name.text.rstrip(" ..."), float(re.sub(r'[^\d.]+', "", price.text)), vendor.text, link])
+            image = res.find_element_by_css_selector("div.ArOc1c").find_element_by_tag_name("img").get_attribute("src")
+            products.append([product_name.text.rstrip(" ..."), float(re.sub(r'[^\d.]+', "", price.text)), vendor.text, link, image])
         driver.close()
         products.sort(key=lambda x: x[1])
     return products
