@@ -19,6 +19,7 @@ def urlify(s):
 
 
 def get_products(product):
+    print(product)
     product = urlify(product)
 
     address = "https://www.google.com/search?q=" + product + "&tbm=shop"
