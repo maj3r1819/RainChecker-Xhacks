@@ -153,22 +153,16 @@ if __name__ == '__main__':
     print(addUser('wzheng2013@gmail.com', '123456'))
     print(addItem('wzheng2013@gmail.com', 'apple', [['apple 1', 100, 'sup 1', 'apple.com', 'image.link']]))
     print(addItem('wzheng2013@gmail.com', 'soccer', [['soccer 1', 100, 'sup 1', 'soccer.com', 'image.link'], ['soccer 2', 50, 'sup 2', 'soccer.com', 'image.link']]))
-    print('\n\n\n')
-    print(json.dumps(json.loads(User.objects().to_json()), sort_keys=True, indent=4))
+    print(addUser('2656485473@qq.com', '123456'))
+    print(addItem('2656485473@qq.com', 'soccer', [['ball 1', 100, 'sup 1', 'ball.com', 'image.link'], ['ball 2', 50, 'sup 2', 'ball.com', 'image.link']]))
+    print(addItem('2656485473@qq.com', 'apple', [['orange 1', 100, 'sup 1', 'orange.com', 'image.link']]))
     print('\n\n\n')
     # expect soccer price be 50 then 100
     print(updateWatchList())
-
+    print('\n\n')
     print(getWatchList('wzheng2013@gmail.com'))
-    print(addItem('wzheng2013@gmail.com', 'soccer', [['soccer 3', 300, 'sup 3', 'soccer.com', 'image.link']]))
-    print('\n\n\n')
-    print(json.dumps(json.loads(User.objects().to_json()), sort_keys=True, indent=4))
-    print('\n\n\n')
-    print(getWatchList('wzheng2013@gmail.com'))
-
-
-    print(addUser('2656485473@qq.com', '123456'))
-    print(updateWatchList())
+    print('\n\n')
+    print(getWatchList('2656485473@qq.com'))
 
     print('\n\n\n')
     print(json.dumps(json.loads(User.objects().to_json()), sort_keys=True, indent=4))
