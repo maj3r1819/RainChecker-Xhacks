@@ -125,6 +125,18 @@ def getWatchList(email):
     return temp_watchlist
 
 
+def updateWatchList():
+    allUser = []
+    for user in User.objects():
+        temp_user = {}
+        temp_user['email'] = user.email
+        temp_watch = []
+        for item in user.watchList:
+            temp_watch.append(item.item_name)
+        temp_user['items'] = temp_watch
+        allUser.append(temp_user)
+    return allUser
+
 # [[option name,  price, vendor name, link, image link], [option name,  price, vendor name, link, image link]]
 
 
@@ -142,6 +154,11 @@ if __name__ == '__main__':
     print(addItem('wzheng2013@gmail.com', 'soccer', [['soccer 3', 100, 'sup 3', 'soccer.com', 'image.link']]))
     print(getWatchList('wzheng2013@gmail.com'))
 
+
+    print(addUser('2656485473@qq.com', '123456'))
+    print(updateWatchList())
+
+    print('\n\n\n')
     print(json.dumps(json.loads(User.objects().to_json()), sort_keys=True, indent=4))
     print('\n\n\n')
     print(json.dumps(json.loads(LoginUser.objects().to_json()), sort_keys=True, indent=4))
