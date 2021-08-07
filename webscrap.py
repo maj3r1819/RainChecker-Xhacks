@@ -31,17 +31,19 @@ soup = BeautifulSoup(response, 'lxml')
 
 data = []
 
-for container in soup.findAll('div', class_='sh-dgr__content'):
-    title = container.find('h4', class_='A2sOrd').text
-    price = container.find('span', class_='a8Pemb').text
-    supplier = container.find('div', class_='aULzUe IuHnof').text
-    # link = container.find('span', class_ ='b07ME mqQL1e').text
+for container in soup.findAll('div', class_='KZmu8e'):
+    title = container.find('div', class_='sh-np__product-title translate-content').text
+    price = container.find('span', class_='T14wmb').text
+    supplier = container.find('div', class_='sh-np__seller-container').text
+    buylink = container.find('a',href = True)['href']
+
+buylink = 'https://www.google.co.in' + buylink
 
 data.append({
 "Title": title,
 "Price": price,
 "Supplier": supplier,
-# "Link" : link
+"Buy Link" : buylink,
 })
 
 print(json.dumps(data, indent = 2, ensure_ascii = False))
