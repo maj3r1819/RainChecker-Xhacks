@@ -3,7 +3,7 @@ from flask_login import UserMixin
 from mongoengine import connect, Document, EmbeddedDocument, StringField, SortedListField, EmbeddedDocumentField, \
     ListField, FloatField
 
-connect('RainChecker')
+connect(host="mongodb+srv://frank:4FQQRHdd%23YK5PPX8@cluster0.uyivi.mongodb.net/total_records?retryWrites=true&w=majority")
 
 
 # sudo service mongod status
@@ -22,6 +22,7 @@ class Option(EmbeddedDocument):
 class Item(EmbeddedDocument):
     item_name = StringField()
     options = SortedListField(EmbeddedDocumentField(Option), ordering='price')
+    cheapest_option = EmbeddedDocumentField(Option)
     # link = StringField()
     # price = StringField()
 
@@ -61,7 +62,6 @@ def addItem(email, item_name, allOptions):
     user = User.objects(email=email).first()
     if not user:
         return 'user not exist'
-
     watchList = user.watchList
     for item in watchList:
         if item.item_name == item_name:
@@ -71,8 +71,9 @@ def addItem(email, item_name, allOptions):
             for opt in allOptions:
                 temp = Option(optionName=opt[0], price=opt[1], supplier=opt[2], link=opt[3], imageLink=opt[4])
                 item.options.append(temp)
-
+            item.cheapest_option = item.options[0]
             user.save()
+
             return 'item options renewed'
 
     item = Item(item_name=item_name)
@@ -80,7 +81,7 @@ def addItem(email, item_name, allOptions):
     for opt in allOptions:
         temp = Option(optionName=opt[0], price=opt[1], supplier=opt[2], link=opt[3], imageLink=opt[4])
         item.options.append(temp)
-
+    item.cheapest_option = item.options[0]
     watchList.append(item)
     user.save()
     return 'item added into watch list'
@@ -145,6 +146,17 @@ def updateWatchList():
     return allUser
 
 
+def getCheapestOption(email, item_name):
+    user = User.objects(email=email).first()
+    if not user:
+        return 'user not exist'
+    watch_list = user.watchList
+    for item in watch_list:
+        if item.item_name == item_name:
+            return item.cheapest_option
+    return None
+
+
 # [[option name,  price, vendor name, link, image link], [option name,  price, vendor name, link, image link]]
 
 
@@ -154,9 +166,9 @@ if __name__ == '__main__':
     print(json.dumps(json.loads(User.objects().to_json()), sort_keys=True, indent=4))
     print(json.dumps(json.loads(LoginUser.objects().to_json()), sort_keys=True, indent=4))
     print('\n\n\n')
-    print(addUser('wzheng2013@gmail.com', '123456'))
-    print(addItem('wzheng2013@gmail.com', 'apple', [['apple 1', 100, 'sup 1', 'apple.com', 'image.link']]))
-    print(addItem('wzheng2013@gmail.com', 'soccer', [['soccer 1', 100, 'sup 1', 'soccer.com', 'image.link'],
+    print(addUser('vigev73270@1uscare.com', '123456'))
+    print(addItem('vigev73270@1uscare.com', 'apple', [['apple 1', 100, 'sup 1', 'apple.com', 'image.link']]))
+    print(addItem('vigev73270@1uscare.com', 'soccer', [['soccer 1', 100, 'sup 1', 'soccer.com', 'image.link'],
                                                      ['soccer 2', 50, 'sup 2', 'soccer.com', 'image.link']]))
     print('\n\n\n')
     print(json.dumps(json.loads(User.objects().to_json()), sort_keys=True, indent=4))
@@ -164,12 +176,12 @@ if __name__ == '__main__':
     # expect soccer price be 50 then 100
     print(updateWatchList())
 
-    print(getWatchList('wzheng2013@gmail.com'))
-    print(addItem('wzheng2013@gmail.com', 'soccer', [['soccer 3', 300, 'sup 3', 'soccer.com', 'image.link']]))
+    print(getWatchList('vigev73270@1uscare.com'))
+    print(addItem('vigev73270@1uscare.com', 'soccer', [['soccer 3', 300, 'sup 3', 'soccer.com', 'image.link']]))
     print('\n\n\n')
     print(json.dumps(json.loads(User.objects().to_json()), sort_keys=True, indent=4))
     print('\n\n\n')
-    print(getWatchList('wzheng2013@gmail.com'))
+    print(getWatchList('vigev73270@1uscare.com'))
 
     print(addUser('2656485473@qq.com', '123456'))
     print(updateWatchList())
@@ -178,5 +190,5 @@ if __name__ == '__main__':
     print(json.dumps(json.loads(User.objects().to_json()), sort_keys=True, indent=4))
     print('\n\n\n')
     print(json.dumps(json.loads(LoginUser.objects().to_json()), sort_keys=True, indent=4))
-    User.drop_collection()
-    LoginUser.drop_collection()
+    #User.drop_collection()
+    #LoginUser.drop_collection()
