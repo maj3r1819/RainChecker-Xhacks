@@ -37,6 +37,12 @@ for container in soup.findAll('div', class_='KZmu8e'):
     supplier = container.find('div', class_='sh-np__seller-container').text
     buylink = container.find('a',href = True)['href']
 
+images = soup.find_all('img')
+print(images)
+for img in images:
+    print(img)
+    if img.has_attr('src'):
+        imglink = img['src']
 buylink = 'https://www.google.co.in' + buylink
 
 data.append({
@@ -44,6 +50,7 @@ data.append({
 "Price": price,
 "Supplier": supplier,
 "Buy Link" : buylink,
+# "imglink" : imglink
 })
 
 print(json.dumps(data, indent = 2, ensure_ascii = False))
