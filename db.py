@@ -3,7 +3,7 @@ from flask_login import UserMixin
 from mongoengine import connect, Document, EmbeddedDocument, StringField, SortedListField, EmbeddedDocumentField, \
     ListField, FloatField
 
-connect(host="mongodb+srv://frank:4FQQRHdd%23YK5PPX8@cluster0.uyivi.mongodb.net/total_records?retryWrites=true&w=majority")
+connect(host="mongodb+srv://frank:pw@cluster0.uyivi.mongodb.net/total_records?retryWrites=true&w=majority")
 
 
 # sudo service mongod status
