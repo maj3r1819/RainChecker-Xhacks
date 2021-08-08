@@ -1,0 +1,33 @@
+.container {
+  margin-top: 1rem;
+  padding: 1em;
+}
+
+.home__hero-section {
+  padding: 50px 0;
+  padding-left: 2em;
+}
+
+/* .dark {
+  color: #1c2237;
+}
+
+.darkBg { 
+  background-color: #1c2237;
+} */
+
+img.home__hero-img-wrapper {
+  background-color: white;
+}
+
+.col {
+  padding: 3em;
+}
+
+.heading {
+  margin-bottom: 1em;
+}
+
+p.home__hero-subtitle {
+  margin-bottom: 1em;
+}
