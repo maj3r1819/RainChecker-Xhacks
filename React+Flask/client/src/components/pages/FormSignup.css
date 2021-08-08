@@ -1,0 +1,28 @@
+.form-content-right {
+  align-items: center;
+  justify-content: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  align-items: center;
+  gap: 1rem;
+  margin-top: 4em;
+
+  outline: 1em;
+  border-width: 0.25em;
+  height: 50%;
+  width: 50%;
+  left: 25%;
+  top: 25%;
+  position: absolute;
+  border-style: solid;
+  border-color: teal;
+}
+
+.form-label {
+  margin-right: 1em;
+}
