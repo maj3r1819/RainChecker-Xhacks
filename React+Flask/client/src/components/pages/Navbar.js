@@ -4,11 +4,27 @@ import {FaBars, FaTimes} from 'react-icons/fa'
 import './Navbar.css'
 import {Button} from './Button';
 import companyLogo from './images/RainChecker-Logo.png'
+import $ from 'jquery'
 
+let right_button_text = "SIGN UP";
+let right_button_link = "/sign-up";
+$.ajax({
+    url: "/sign-up",
+    type: "GET",
+      
+    success: function(data){
+        console.log(data)
+        if(data == "logged in"){
+            right_button_text = "SIGN OUT";
+            right_button_link = "/logout"
+        }
+        
+     }
+     } );
 
 function Navbar() {
     const [click, setClick] = useState(false);
-    const [button, setButton] = useState(true)
+    const [button, setButton] = useState(true);
 
     const handleClick = () => setClick(!click);
     const closeMobileMenu = () => setClick(false);
@@ -21,9 +37,9 @@ function Navbar() {
         }
         };
 
-
+    
     window.addEventListener('resize', showButton);
-
+    
     return (
         <>
         <div className="navbar">
@@ -52,14 +68,14 @@ function Navbar() {
                     </li>
                     <li className='nav-btn'>
                         {button ? (
-                            <Link to='/sign-up' className="btn-link">
-                                <Button buttonStyle='btn--outline'>SIGN UP</Button>
+                            <Link to={right_button_link} className="btn-link">
+                                <Button buttonStyle='btn--outline'>{right_button_text}</Button>
                             </Link>
                         ): (
-                            <Link to='/sign-up' className="btn-link">
+                            <Link to={right_button_link} className="btn-link">
                                 <Button buttonStyle='btn--outline'
                                 buttonSize='btn--mobile'>
-                                    SIGN UP</Button>
+                                    {right_button_text}</Button>
                             </Link>
                         )}
                     </li>
