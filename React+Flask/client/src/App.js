@@ -6,7 +6,7 @@ import Home from  "./components/pages/HomePage/Home";
 import Prices from  "./components/pages/Prices-Trends/Prices";
 import Wish from  "./components/pages/Wishlist/Wish";
 import Form from  "./components/pages/FormSignup";
-
+import Logout from "./components/pages/Logout";
 
 
 function App() {
@@ -32,6 +32,8 @@ function App() {
         <Route path='/sign-up' component={Form}/>
         <Route path='/prices' component={Prices}/>
         <Route path='/wishlist' component={Wish}/>
+        <Route path='/logout' component={Logout}/>
+
       </Switch>
     </Router>
   )
