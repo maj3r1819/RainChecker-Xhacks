@@ -24,7 +24,7 @@ class Item(EmbeddedDocument):
     # price = StringField()
 
 class User(Document):
-    # username = StringField()
+    username = StringField()
     email = StringField()
     password = StringField()
     # watchList = SortedListField(EmbeddedDocumentField(Item), ordering = 'item_name')
@@ -36,13 +36,13 @@ class LoginUser(Document, UserMixin):
 
 
 
-def addUser(email, password):
+def addUser(username, email, password):
     if User.objects(email = email).first():
         return 'email already used'
 
-    User(email = email, password = password).save()
+    User(email = email, username = username, password = password).save()
     LoginUser(email = email).save()
-    return 'new user created'
+    return 'success'
 
 
 def removeUser(email):
@@ -51,6 +51,7 @@ def removeUser(email):
 
     User.objects(email = email).first().delete()
     LoginUser.objects(email = email).first().delete()
+    return 'success'
 
 
 # [[option name,  price, vendor name, link, image link], [option name,  price, vendor name, link, image link]]
@@ -150,10 +151,10 @@ if __name__ == '__main__':
     print(json.dumps(json.loads(User.objects().to_json()), sort_keys=True, indent=4))
     print(json.dumps(json.loads(LoginUser.objects().to_json()), sort_keys=True, indent=4))
     print('\n\n\n')
-    print(addUser('wzheng2013@gmail.com', '123456'))
+    print(addUser('user1', 'wzheng2013@gmail.com', '123456'))
     print(addItem('wzheng2013@gmail.com', 'apple', [['apple 1', 100, 'sup 1', 'apple.com', 'image.link']]))
     print(addItem('wzheng2013@gmail.com', 'soccer', [['soccer 1', 100, 'sup 1', 'soccer.com', 'image.link'], ['soccer 2', 50, 'sup 2', 'soccer.com', 'image.link']]))
-    print(addUser('2656485473@qq.com', '123456'))
+    print(addUser('user2', '2656485473@qq.com', '123456'))
     print(addItem('2656485473@qq.com', 'soccer', [['ball 1', 100, 'sup 1', 'ball.com', 'image.link'], ['ball 2', 50, 'sup 2', 'ball.com', 'image.link']]))
     print(addItem('2656485473@qq.com', 'apple', [['orange 1', 100, 'sup 1', 'orange.com', 'image.link']]))
     print('\n\n\n')
