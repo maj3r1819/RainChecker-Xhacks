@@ -31,7 +31,7 @@ def get_products(product):
 
     driver = Edge(executable_path=DRIVER_PATH, options=options)
     driver.get(address)
-    driver.implicitly_wait(10)
+    driver.implicitly_wait(30)
     products = []
 
     if len(driver.find_elements_by_css_selector("div.CSEDeb.V5niGc.bOFGdf.sh-sr__shop-result-header.wcUdwf")) > 0: # check if the website format is the column instead of grid
