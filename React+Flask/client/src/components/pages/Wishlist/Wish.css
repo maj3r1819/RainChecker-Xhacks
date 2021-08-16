@@ -1,0 +1,26 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.stack-large {
+  margin-top: 5%;
+  justify-content: center;
+  align-items: center;
+}
+.todoapp > * {
+  max-width: 50rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media screen and (max-width: 960px) {
+  .stack-large {
+    margin-top: 30%;
+    justify-content: center;
+  }
+  ul.todo-list.stack-large.stack-exception {
+    margin-top: 5%;
+  }
+}
