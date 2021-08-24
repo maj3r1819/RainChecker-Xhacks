@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\React+Flask",
+    "\\React+Flask\\client",
+    "\\React+Flask\\client\\src",
+    "\\React+Flask\\client\\src\\components",
+    "\\React+Flask\\client\\src\\components\\pages",
+    "\\React+Flask\\client\\src\\components\\pages\\HomePage",
+    "\\React+Flask\\client\\src\\components\\pages\\images",
+    "\\React+Flask\\client\\src\\components\\pages\\Prices-Trends",
+    "\\React+Flask\\client\\src\\components\\pages\\Wishlist"
+  ],
+  "SelectedNode": "\\db.py",
+  "PreviewInSolutionExplorer": false
+}
