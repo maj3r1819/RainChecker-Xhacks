@@ -3,8 +3,8 @@ from flask_login import UserMixin
 from mongoengine import connect, Document, EmbeddedDocument, StringField, SortedListField, EmbeddedDocumentField, \
     ListField, FloatField
 
-# connect(host="mongodb+srv://frank:pw@cluster0.uyivi.mongodb.net/total_records?retryWrites=true&w=majority")
-connect('RainChecker')
+connect(host="mongodb+srv://frank:pw@cluster0.uyivi.mongodb.net/total_records?retryWrites=true&w=majority")
+#connect('RainChecker')
 
 # sudo service mongod status
 
@@ -37,8 +37,6 @@ class User(Document):
 
 class LoginUser(Document, UserMixin):
     email = StringField()
-
-
 
 
 def addUser(username, email, password):
