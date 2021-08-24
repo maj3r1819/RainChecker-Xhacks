@@ -4,18 +4,20 @@ import Wish_item from './wishlist-item'
 import Form from './Form'
 import FilterButton from './FilterButton'
 import HeroSection from '../HeroSection'
-import {homeObjOne} from './Data'
+import { homeObjOne } from './Data'
+const { v4: uuidv4 } = require('uuid');
 
 function Home() {
 
   function deleteTask(id) {
-    const remainingTasks = tasks.filter(task => id !== task.id);
+      const remainingTasks = tasks.filter(task => id !== task.id);
+      console.log(remainingTasks.length);
     setTasks(remainingTasks);
   }
 
   
-  function addTask(name) {
-    const newTask = { id: "id", name: name, completed: false };
+    function addTask(name) {
+        const newTask = { id: uuidv4(), name: name, completed: false };
     setTasks([...tasks, newTask]);
   }
 
